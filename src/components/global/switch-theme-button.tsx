@@ -23,7 +23,7 @@ export const SwitchThemeButton = () => {
 
   return (
     <Button
-      className="absolute bottom-2 left-2"
+      className="sticky bottom-2 left-2"
       onClick={() => {
         switchTheme(window.localStorage.theme);
       }}

@@ -3,7 +3,7 @@ type Source = {
   name: string;
 };
 
-export type New = {
+export type Article = {
   source: Source;
   author: string;
   title?: string;
@@ -12,4 +12,9 @@ export type New = {
   urlToImage: string;
   publishedAt: Date;
   content: string;
+};
+
+export type listNewsResponse = {
+  totalResults: number;
+  articles: Article[];
 };

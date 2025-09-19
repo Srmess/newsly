@@ -1,4 +1,4 @@
-import { Card, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card/component";
 import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_auth-layout")({

@@ -5,6 +5,19 @@
 
 @theme {
   --default-font-family: "Plus Jakarta Sans";
+  --font-bold: 600;
+  --font-normal: 400;
+  --text-xs: 10px;
+  --text-sm: 12px;
+  --text-base: 14px;
+  --text-lg: 16px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 30px;
+  --text-4xl: 36px;
+  --text-5xl: 48px;
+  --text-6xl: 60px;
+  --text-7xl: 72px;
 }
 
 @theme inline {
