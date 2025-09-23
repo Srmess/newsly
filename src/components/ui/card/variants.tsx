@@ -6,7 +6,7 @@ export const cardTitleVariants = cva(
     variants: {
       variant: {
         default: "",
-        newsCard: "text-lg md:text-xl lg:text-2xl font-normal",
+        newsCard: "text-lg md:text-xl lg:text-2xl font-normal line-clamp-4",
       },
     },
     defaultVariants: {
@@ -21,7 +21,7 @@ export const cardVariants = cva(
     variants: {
       variant: {
         default: "flex-col gap-6",
-        newsCard: "max-h-72 flex-row gap-6 p-3",
+        newsCard: "max-h-72 flex-row gap-6 p-3 h-full",
       },
     },
     defaultVariants: {

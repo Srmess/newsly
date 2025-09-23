@@ -11,7 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PrivateLayoutRouteImport } from './routes/_private-layout'
 import { Route as AuthLayoutRouteImport } from './routes/_auth-layout'
-import { Route as PrivateLayoutIndexRouteImport } from './routes/_private-layout/index'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as PrivateLayoutNewsRouteImport } from './routes/_private-layout/news'
 import { Route as AuthLayoutRegisterRouteImport } from './routes/_auth-layout/register'
 import { Route as AuthLayoutLoginRouteImport } from './routes/_auth-layout/login'
 
@@ -23,9 +24,14 @@ const AuthLayoutRoute = AuthLayoutRouteImport.update({
   id: '/_auth-layout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivateLayoutIndexRoute = PrivateLayoutIndexRouteImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivateLayoutNewsRoute = PrivateLayoutNewsRouteImport.update({
+  id: '/news',
+  path: '/news',
   getParentRoute: () => PrivateLayoutRoute,
 } as any)
 const AuthLayoutRegisterRoute = AuthLayoutRegisterRouteImport.update({
@@ -40,38 +46,43 @@ const AuthLayoutLoginRoute = AuthLayoutLoginRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/login': typeof AuthLayoutLoginRoute
   '/register': typeof AuthLayoutRegisterRoute
-  '/': typeof PrivateLayoutIndexRoute
+  '/news': typeof PrivateLayoutNewsRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/login': typeof AuthLayoutLoginRoute
   '/register': typeof AuthLayoutRegisterRoute
-  '/': typeof PrivateLayoutIndexRoute
+  '/news': typeof PrivateLayoutNewsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/_auth-layout': typeof AuthLayoutRouteWithChildren
   '/_private-layout': typeof PrivateLayoutRouteWithChildren
   '/_auth-layout/login': typeof AuthLayoutLoginRoute
   '/_auth-layout/register': typeof AuthLayoutRegisterRoute
-  '/_private-layout/': typeof PrivateLayoutIndexRoute
+  '/_private-layout/news': typeof PrivateLayoutNewsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/register' | '/'
+  fullPaths: '/' | '/login' | '/register' | '/news'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/register' | '/'
+  to: '/' | '/login' | '/register' | '/news'
   id:
     | '__root__'
+    | '/'
     | '/_auth-layout'
     | '/_private-layout'
     | '/_auth-layout/login'
     | '/_auth-layout/register'
-    | '/_private-layout/'
+    | '/_private-layout/news'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AuthLayoutRoute: typeof AuthLayoutRouteWithChildren
   PrivateLayoutRoute: typeof PrivateLayoutRouteWithChildren
 }
@@ -92,11 +103,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_private-layout/': {
-      id: '/_private-layout/'
+    '/': {
+      id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof PrivateLayoutIndexRouteImport
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_private-layout/news': {
+      id: '/_private-layout/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof PrivateLayoutNewsRouteImport
       parentRoute: typeof PrivateLayoutRoute
     }
     '/_auth-layout/register': {
@@ -131,11 +149,11 @@ const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
 )
 
 interface PrivateLayoutRouteChildren {
-  PrivateLayoutIndexRoute: typeof PrivateLayoutIndexRoute
+  PrivateLayoutNewsRoute: typeof PrivateLayoutNewsRoute
 }
 
 const PrivateLayoutRouteChildren: PrivateLayoutRouteChildren = {
-  PrivateLayoutIndexRoute: PrivateLayoutIndexRoute,
+  PrivateLayoutNewsRoute: PrivateLayoutNewsRoute,
 }
 
 const PrivateLayoutRouteWithChildren = PrivateLayoutRoute._addFileChildren(
@@ -143,6 +161,7 @@ const PrivateLayoutRouteWithChildren = PrivateLayoutRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AuthLayoutRoute: AuthLayoutRouteWithChildren,
   PrivateLayoutRoute: PrivateLayoutRouteWithChildren,
 }

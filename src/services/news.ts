@@ -20,8 +20,6 @@ export const listNewsQueryOptions = ({
     queryFn: async () => {
       const q = search ? search : "a";
 
-      console.log(q);
-
       const news = await newsAPI.get<listNewsResponse>(
         `/v2/everything?q=${q}&searchIn=title&language=${language}&pageSize=${pageSize}&page=${page}&sortBy=publishedAt`
       );

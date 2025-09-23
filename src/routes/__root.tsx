@@ -22,15 +22,11 @@ export const Route = createRootRouteWithContext<{
 
 function RootComponent() {
   return (
-    <html>
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <Outlet />
-        <SwitchThemeButton />
-      </body>
-    </html>
+    <>
+      <HeadContent />
+      <Outlet />
+      <SwitchThemeButton />
+    </>
   );
 }
 
