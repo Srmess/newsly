@@ -1,7 +1,7 @@
-import { MainHeader } from "@/components/layout/main-header";
+import { WordleHeader } from "@/components/layout/wordle-header";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_private-layout")({
+export const Route = createFileRoute("/_wordle-layout")({
   component: LayoutComponent,
   notFoundComponent: RouteNotFoundPage,
 });
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_private-layout")({
 function LayoutComponent() {
   return (
     <div className="min-h-screen h-full">
-      <MainHeader />
+      <WordleHeader />
       <div className="h-full py-10">
         <Outlet />
       </div>

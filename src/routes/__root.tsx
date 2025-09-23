@@ -1,4 +1,5 @@
 import { SwitchThemeButton } from "@/components/global/switch-theme-button";
+import { MainHeader } from "@/components/layout/main-header";
 import type { QueryClient } from "@tanstack/react-query";
 import {
   HeadContent,
@@ -23,6 +24,7 @@ export const Route = createRootRouteWithContext<{
 function RootComponent() {
   return (
     <>
+      <MainHeader />
       <HeadContent />
       <Outlet />
       <SwitchThemeButton />

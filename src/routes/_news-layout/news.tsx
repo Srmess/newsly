@@ -12,7 +12,7 @@ const newsSearch = z.object({
   page: z.number().optional(),
 });
 
-export const Route = createFileRoute("/_private-layout/news")({
+export const Route = createFileRoute("/_news-layout/news")({
   component: RouteComponent,
   validateSearch: (search) => newsSearch.parse(search),
   beforeLoad: ({ search }) => search,

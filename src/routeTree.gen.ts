@@ -9,19 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PrivateLayoutRouteImport } from './routes/_private-layout'
-import { Route as AuthLayoutRouteImport } from './routes/_auth-layout'
+import { Route as WordleLayoutRouteImport } from './routes/_wordle-layout'
+import { Route as NewsLayoutRouteImport } from './routes/_news-layout'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as PrivateLayoutNewsRouteImport } from './routes/_private-layout/news'
-import { Route as AuthLayoutRegisterRouteImport } from './routes/_auth-layout/register'
-import { Route as AuthLayoutLoginRouteImport } from './routes/_auth-layout/login'
+import { Route as WordleLayoutWordleRouteImport } from './routes/_wordle-layout/wordle'
+import { Route as NewsLayoutNewsRouteImport } from './routes/_news-layout/news'
 
-const PrivateLayoutRoute = PrivateLayoutRouteImport.update({
-  id: '/_private-layout',
+const WordleLayoutRoute = WordleLayoutRouteImport.update({
+  id: '/_wordle-layout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthLayoutRoute = AuthLayoutRouteImport.update({
-  id: '/_auth-layout',
+const NewsLayoutRoute = NewsLayoutRouteImport.update({
+  id: '/_news-layout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -29,78 +28,69 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivateLayoutNewsRoute = PrivateLayoutNewsRouteImport.update({
+const WordleLayoutWordleRoute = WordleLayoutWordleRouteImport.update({
+  id: '/wordle',
+  path: '/wordle',
+  getParentRoute: () => WordleLayoutRoute,
+} as any)
+const NewsLayoutNewsRoute = NewsLayoutNewsRouteImport.update({
   id: '/news',
   path: '/news',
-  getParentRoute: () => PrivateLayoutRoute,
-} as any)
-const AuthLayoutRegisterRoute = AuthLayoutRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => AuthLayoutRoute,
-} as any)
-const AuthLayoutLoginRoute = AuthLayoutLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => AuthLayoutRoute,
+  getParentRoute: () => NewsLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof AuthLayoutLoginRoute
-  '/register': typeof AuthLayoutRegisterRoute
-  '/news': typeof PrivateLayoutNewsRoute
+  '/news': typeof NewsLayoutNewsRoute
+  '/wordle': typeof WordleLayoutWordleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof AuthLayoutLoginRoute
-  '/register': typeof AuthLayoutRegisterRoute
-  '/news': typeof PrivateLayoutNewsRoute
+  '/news': typeof NewsLayoutNewsRoute
+  '/wordle': typeof WordleLayoutWordleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_auth-layout': typeof AuthLayoutRouteWithChildren
-  '/_private-layout': typeof PrivateLayoutRouteWithChildren
-  '/_auth-layout/login': typeof AuthLayoutLoginRoute
-  '/_auth-layout/register': typeof AuthLayoutRegisterRoute
-  '/_private-layout/news': typeof PrivateLayoutNewsRoute
+  '/_news-layout': typeof NewsLayoutRouteWithChildren
+  '/_wordle-layout': typeof WordleLayoutRouteWithChildren
+  '/_news-layout/news': typeof NewsLayoutNewsRoute
+  '/_wordle-layout/wordle': typeof WordleLayoutWordleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register' | '/news'
+  fullPaths: '/' | '/news' | '/wordle'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register' | '/news'
+  to: '/' | '/news' | '/wordle'
   id:
     | '__root__'
     | '/'
-    | '/_auth-layout'
-    | '/_private-layout'
-    | '/_auth-layout/login'
-    | '/_auth-layout/register'
-    | '/_private-layout/news'
+    | '/_news-layout'
+    | '/_wordle-layout'
+    | '/_news-layout/news'
+    | '/_wordle-layout/wordle'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthLayoutRoute: typeof AuthLayoutRouteWithChildren
-  PrivateLayoutRoute: typeof PrivateLayoutRouteWithChildren
+  NewsLayoutRoute: typeof NewsLayoutRouteWithChildren
+  WordleLayoutRoute: typeof WordleLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_private-layout': {
-      id: '/_private-layout'
+    '/_wordle-layout': {
+      id: '/_wordle-layout'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof PrivateLayoutRouteImport
+      preLoaderRoute: typeof WordleLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_auth-layout': {
-      id: '/_auth-layout'
+    '/_news-layout': {
+      id: '/_news-layout'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthLayoutRouteImport
+      preLoaderRoute: typeof NewsLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -110,60 +100,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_private-layout/news': {
-      id: '/_private-layout/news'
+    '/_wordle-layout/wordle': {
+      id: '/_wordle-layout/wordle'
+      path: '/wordle'
+      fullPath: '/wordle'
+      preLoaderRoute: typeof WordleLayoutWordleRouteImport
+      parentRoute: typeof WordleLayoutRoute
+    }
+    '/_news-layout/news': {
+      id: '/_news-layout/news'
       path: '/news'
       fullPath: '/news'
-      preLoaderRoute: typeof PrivateLayoutNewsRouteImport
-      parentRoute: typeof PrivateLayoutRoute
-    }
-    '/_auth-layout/register': {
-      id: '/_auth-layout/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof AuthLayoutRegisterRouteImport
-      parentRoute: typeof AuthLayoutRoute
-    }
-    '/_auth-layout/login': {
-      id: '/_auth-layout/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AuthLayoutLoginRouteImport
-      parentRoute: typeof AuthLayoutRoute
+      preLoaderRoute: typeof NewsLayoutNewsRouteImport
+      parentRoute: typeof NewsLayoutRoute
     }
   }
 }
 
-interface AuthLayoutRouteChildren {
-  AuthLayoutLoginRoute: typeof AuthLayoutLoginRoute
-  AuthLayoutRegisterRoute: typeof AuthLayoutRegisterRoute
+interface NewsLayoutRouteChildren {
+  NewsLayoutNewsRoute: typeof NewsLayoutNewsRoute
 }
 
-const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
-  AuthLayoutLoginRoute: AuthLayoutLoginRoute,
-  AuthLayoutRegisterRoute: AuthLayoutRegisterRoute,
+const NewsLayoutRouteChildren: NewsLayoutRouteChildren = {
+  NewsLayoutNewsRoute: NewsLayoutNewsRoute,
 }
 
-const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
-  AuthLayoutRouteChildren,
+const NewsLayoutRouteWithChildren = NewsLayoutRoute._addFileChildren(
+  NewsLayoutRouteChildren,
 )
 
-interface PrivateLayoutRouteChildren {
-  PrivateLayoutNewsRoute: typeof PrivateLayoutNewsRoute
+interface WordleLayoutRouteChildren {
+  WordleLayoutWordleRoute: typeof WordleLayoutWordleRoute
 }
 
-const PrivateLayoutRouteChildren: PrivateLayoutRouteChildren = {
-  PrivateLayoutNewsRoute: PrivateLayoutNewsRoute,
+const WordleLayoutRouteChildren: WordleLayoutRouteChildren = {
+  WordleLayoutWordleRoute: WordleLayoutWordleRoute,
 }
 
-const PrivateLayoutRouteWithChildren = PrivateLayoutRoute._addFileChildren(
-  PrivateLayoutRouteChildren,
+const WordleLayoutRouteWithChildren = WordleLayoutRoute._addFileChildren(
+  WordleLayoutRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthLayoutRoute: AuthLayoutRouteWithChildren,
-  PrivateLayoutRoute: PrivateLayoutRouteWithChildren,
+  NewsLayoutRoute: NewsLayoutRouteWithChildren,
+  WordleLayoutRoute: WordleLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -14,8 +14,8 @@ interface NewsPaginationProps {
 }
 
 export const NewsPagination = ({ totalResults }: NewsPaginationProps) => {
-  const { page } = useSearch({ from: "/_private-layout/news" });
-  const totalPages = totalResults > 1000 ? 10 : round(totalResults / 10);
+  const { page } = useSearch({ from: "/_news-layout/news" });
+  const totalPages = totalResults > 100 ? 10 : round(totalResults / 10);
 
   return (
     <Pagination>
