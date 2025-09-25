@@ -21,6 +21,8 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "p-0! h-fit! text-primary underline-offset-4 hover:underline ",
         tab: "rounded-none border-b-2 border-transparent hover:border-ring text-primary-foreground data-[active=true]:border-accent data-[active=true]:font-semibold data-[active=true]:hover:border-ring",
+        keyWordle:
+          " bg-zinc-200 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50 border border-transparent hover:bg-zinc-300 dark:hover:bg-zinc-700 shadow-sm ",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -28,11 +30,21 @@ const buttonVariants = cva(
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
         tab: "px-4 py-1 has-[>svg]:px-3",
+        keyWordle:
+          "h-12 min-w-[44px] px-3 py-2 rounded-md text-sm sm:text-xl font-extrabold ",
+      },
+      state: {
+        neutral: "",
+        wrong:
+          "bg-zinc-200/40 text-zinc-900 dark:bg-zinc-800/40 dark:text-zinc-50 border border-transparent",
+        "right-letter": "bg-system-yellow text-white dark:bg-system-yellow",
+        "right-place": "bg-system-green text-white dark:bg-system-green",
       },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      state: "neutral",
     },
   }
 );
@@ -41,6 +53,7 @@ function Button({
   className,
   variant,
   size,
+  state,
   asChild = false,
   ...props
 }: React.ComponentProps<"button"> &
@@ -52,7 +65,7 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, state }), className)}
       {...props}
     />
   );
