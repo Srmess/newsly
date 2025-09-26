@@ -1,4 +1,5 @@
 import { WordleHeader } from "@/components/layout/wordle-header";
+import { WordleContextProvider } from "@/context/wordle-context";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_wordle-layout")({
@@ -10,9 +11,11 @@ function LayoutComponent() {
   return (
     <div className="min-h-screen h-full">
       <WordleHeader />
-      <div className="h-full py-10">
-        <Outlet />
-      </div>
+      <WordleContextProvider>
+        <div className="h-full py-10">
+          <Outlet />
+        </div>
+      </WordleContextProvider>
     </div>
   );
 }

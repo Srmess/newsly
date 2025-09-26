@@ -1,6 +1,9 @@
 import { Keyboard } from "@/components/wordle/keyboard";
 import { WordRow } from "@/components/wordle/word-row";
+import { WordleSchema, type WordleInfer } from "@/schemas/wordle-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute } from "@tanstack/react-router";
+import { FormProvider, useForm } from "react-hook-form";
 
 const MOCKED_DATA = {
   curRow: 3,
@@ -28,15 +31,32 @@ function RouteComponent() {
 
   const emptiesRow = 6 - MOCKED_DATA.tries.length;
 
-  return (
-    <div className="flex flex-col items-center size-full">
-      <div>
-        {Array.from({ length: 6 }).map((_, i) => (
-          <WordRow currentRow={1} empty={emptiesRow < i} rowIndex={i} />
-        ))}
-      </div>
+  const form = useForm<WordleInfer>({
+    resolver: zodResolver(WordleSchema),
+    defaultValues: {
+      letter: [],
+      word: "",
+    },
+  });
 
-      <Keyboard />
-    </div>
+  const onSubmit = (data: WordleInfer) => {
+    console.log(data);
+  };
+
+  return (
+    <FormProvider {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col items-center size-full"
+      >
+        <div>
+          {Array.from({ length: 6 }).map((_, i) => (
+            <WordRow key={i} empty={emptiesRow < i} rowIndex={i} />
+          ))}
+        </div>
+
+        <Keyboard />
+      </form>
+    </FormProvider>
   );
 }

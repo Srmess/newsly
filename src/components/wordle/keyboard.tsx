@@ -13,11 +13,12 @@ export const Keyboard = () => {
   return (
     <div className="max-h-[25vh] max-w-[720px] size-full ">
       <div className="flex flex-col gap-2">
-        {keyboardLetters.map((row) => (
-          <div className="flex justify-center gap-1">
-            {row.map(({ letter, status }) => {
+        {keyboardLetters.map((row, i) => (
+          <div key={i} className="flex justify-center gap-1">
+            {row.map(({ letter, status }, i) => {
               return (
                 <Button
+                  key={i}
                   variant={"keyWordle"}
                   size={"keyWordle"}
                   state={status}
