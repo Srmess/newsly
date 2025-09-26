@@ -12,7 +12,7 @@ function LayoutComponent() {
     <div className="min-h-screen h-full">
       <WordleHeader />
       <WordleContextProvider>
-        <div className="h-full py-10">
+        <div className="h-full pb-10 py-5">
           <Outlet />
         </div>
       </WordleContextProvider>

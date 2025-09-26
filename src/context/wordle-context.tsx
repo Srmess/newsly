@@ -1,5 +1,3 @@
-import { WordleSchema, type WordleInfer } from "@/schemas/wordle-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createContext,
   useContext,
@@ -8,12 +6,12 @@ import {
   type ReactNode,
   type SetStateAction,
 } from "react";
-import { useForm, type UseFormReturn } from "react-hook-form";
 
 type WordleContextType = {
   inputIndex: number;
   setInputIndex: Dispatch<SetStateAction<number>>;
-  form: UseFormReturn<WordleInfer>;
+  toastError: string | null;
+  setToastError: Dispatch<SetStateAction<string | null>>;
 };
 
 const wordleContext = createContext<WordleContextType | null>(null);
@@ -24,17 +22,12 @@ export const WordleContextProvider = ({
   children: ReactNode;
 }) => {
   const [inputIndex, setInputIndex] = useState(0);
-
-  const form = useForm<WordleInfer>({
-    resolver: zodResolver(WordleSchema),
-    defaultValues: {
-      letter: [],
-      word: "",
-    },
-  });
+  const [toastError, setToastError] = useState<string | null>("");
 
   return (
-    <wordleContext.Provider value={{ form, inputIndex, setInputIndex }}>
+    <wordleContext.Provider
+      value={{ inputIndex, setInputIndex, toastError, setToastError }}
+    >
       {children}
     </wordleContext.Provider>
   );

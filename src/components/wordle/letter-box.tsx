@@ -18,7 +18,7 @@ export const LetterBox = React.forwardRef<
   HTMLInputElement | null,
   LetterBoxProps
 >(({ letterIndex, focused, setInputFocus, ...props }, ref) => {
-  const { setInputIndex } = useWordleContext();
+  const { setInputIndex, setToastError } = useWordleContext();
 
   const { register, setValue } = useFormContext();
 
@@ -68,6 +68,8 @@ export const LetterBox = React.forwardRef<
 
     if (e.key === "Enter") {
       e.currentTarget.value = currentVal;
+
+      setToastError("Só palavras com 5 letras");
     }
   };
 

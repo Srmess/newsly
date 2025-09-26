@@ -5715,6 +5715,7 @@ export const words = new Set([
   "varre",
   "varri",
   "varro",
+  "vasco",
   "vasos",
   "vasta",
   "vasto",
@@ -6027,7 +6028,7 @@ export const words = new Set([
   "zurro",
 ]);
 
-export const wordsAndAccents = {
+export const wordsWithAccents = {
   aarao: "aarão",
   acude: "açude",
   adoca: "adoça",
@@ -6471,6 +6472,7 @@ export const wordsAndAccents = {
   tufao: "tufão",
   tunel: "túnel",
   uniao: "união",
+  ureia: "uréia",
   vacuo: "vácuo",
   vagao: "vagão",
   varao: "varão",
