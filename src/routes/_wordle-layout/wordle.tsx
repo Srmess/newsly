@@ -1,39 +1,22 @@
 import { Keyboard } from "@/components/wordle/keyboard";
 import { WordRow } from "@/components/wordle/word-row";
 import { useWordleContext } from "@/context/wordle-context";
+import { getGameData } from "@/lib/helper/wordle-helpers";
 import { words, wordsWithAccents } from "@/lib/words";
 import { WordleSchema, type WordleInfer } from "@/schemas/wordle-schema";
+import type { LocalStorageWordleData } from "@/types/wordle";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-const MOCKED_DATA = {
-  curRow: 3,
-  curTry: [],
-  curday: 1360,
-  gameOver: 0,
-  invalids: [],
-  normSolution: "adiar",
-  solution: "adiar",
-  tries: [
-    ["l", "e", "t", "r", "a"],
-    ["a", "t", "r", "a", "s"],
-    ["h", "o", "m", "e", "m"],
-  ],
-  won: null,
-};
-
 export const Route = createFileRoute("/_wordle-layout/wordle")({
   component: RouteComponent,
-  context: () => ({ MOCKED_DATA }),
 });
 
 function RouteComponent() {
-  const { MOCKED_DATA } = Route.useRouteContext();
   const { setToastError, toastError } = useWordleContext();
-
-  const emptiesRow = 6 - MOCKED_DATA.tries.length;
+  const gameData = getGameData();
 
   const form = useForm<WordleInfer>({
     resolver: zodResolver(WordleSchema),
@@ -43,7 +26,7 @@ function RouteComponent() {
   });
 
   const onSubmit = (data: WordleInfer) => {
-    const { letter } = data;
+    const letter = data.letter.map((letter) => letter.toLowerCase());
 
     let word = letter.join().replaceAll(",", "").toLowerCase();
 
@@ -54,6 +37,8 @@ function RouteComponent() {
       return;
     }
 
+    setToastError(null);
+
     const wordHasAccentuation =
       wordsWithAccents[word as keyof typeof wordsWithAccents];
 
@@ -61,20 +46,37 @@ function RouteComponent() {
       word = wordHasAccentuation;
     }
 
-    console.log(word);
+    gameData.tries.push(letter);
+
+    localStorage.setItem(
+      "letraco",
+      JSON.stringify({
+        ...gameData,
+        tries: gameData.tries,
+        curRow: gameData.curRow + 1,
+      } as LocalStorageWordleData)
+    );
+
+    form.reset();
   };
 
   useEffect(() => {
-    if (toastError) {
+    if (toastError && gameData.curRow < 5) {
       setTimeout(() => {
         setToastError(null);
       }, 50000);
     }
   }, [toastError]);
 
-  if (form.formState.errors) {
-    console.log(form.formState.errors);
-  }
+  useEffect(() => {
+    const err = form.formState.errors.letter?.[4]?.message;
+    if (err) {
+      setToastError(err);
+    }
+    if (gameData.curRow > 5) {
+      setToastError(`Palavra certa: ${gameData.solution}`);
+    }
+  }, [form.formState.errors, setToastError]);
 
   return (
     <div className="space-y-2">
@@ -92,10 +94,9 @@ function RouteComponent() {
         >
           <div>
             {Array.from({ length: 6 }).map((_, i) => (
-              <WordRow key={i} empty={emptiesRow < i} rowIndex={i} />
+              <WordRow key={i} rowIndex={i} />
             ))}
           </div>
-
           <Keyboard />
         </form>
       </FormProvider>

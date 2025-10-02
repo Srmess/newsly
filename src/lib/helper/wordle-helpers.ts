@@ -1,4 +1,5 @@
 import type { FilledLetterBoxProps } from "@/components/wordle/letter-box";
+import type { LocalStorageWordleData } from "@/types/wordle";
 import { WORDLE_KEYS } from "../wordle/keyboard-layout";
 
 type LetterStatus = FilledLetterBoxProps["status"];
@@ -45,4 +46,27 @@ export function getKeyboardLetters(tries: string[][], solution: string) {
       status: usedLetters.get(key) ?? "neutral",
     }))
   );
+}
+
+export function getGameData() {
+  let gameData = localStorage.getItem("letraco");
+
+  if (!gameData) {
+    localStorage.setItem(
+      "letraco",
+      JSON.stringify({
+        curRow: 0,
+        gameOver: 0,
+        invalids: [],
+        normSolution: "adiar",
+        solution: "adiar",
+        tries: [],
+        won: null,
+      })
+    );
+
+    gameData = localStorage.getItem("letraco")!;
+  }
+
+  return JSON.parse(gameData) as LocalStorageWordleData;
 }

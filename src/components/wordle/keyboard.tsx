@@ -1,14 +1,16 @@
-import { getKeyboardLetters } from "@/lib/helper/wordle-helpers";
+import { getGameData, getKeyboardLetters } from "@/lib/helper/wordle-helpers";
 import { cn } from "@/lib/utils";
-import { useRouteContext } from "@tanstack/react-router";
+import type React from "react";
 import { Button } from "../ui/button";
 
 export const Keyboard = () => {
-  const {
-    MOCKED_DATA: { tries, solution },
-  } = useRouteContext({ from: "/_wordle-layout/wordle" });
+  const { tries, solution } = getGameData();
 
   const keyboardLetters = getKeyboardLetters(tries, solution);
+
+  const onClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    console.log(e);
+  };
 
   return (
     <div className="max-h-[25vh] max-w-[720px] size-full ">
@@ -27,6 +29,8 @@ export const Keyboard = () => {
                     letter === "ENTER" && "ml-2 px-4",
                     letter === "⌫" && "ml-2 px-4"
                   )}
+                  type="button"
+                  onClick={onClick}
                 >
                   {letter.toUpperCase()}
                 </Button>
