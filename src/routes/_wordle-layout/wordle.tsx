@@ -79,7 +79,7 @@ function RouteComponent() {
   }, [form.formState.errors, setToastError]);
 
   return (
-    <div className="space-y-2">
+    <div className="h-full flex flex-col gap-5">
       <div className="w-full h-8 flex items-center justify-center">
         {toastError && (
           <p className="w-fit bg-chart-5/40 rounded-lg px-4 py-1 text-lg font-extrabold leading tracking-widest">
@@ -90,9 +90,9 @@ function RouteComponent() {
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col items-center size-full"
+          className="flex flex-col items-center size-full gap-4"
         >
-          <div>
+          <div className="flex flex-col gap-2 ">
             {Array.from({ length: 6 }).map((_, i) => (
               <WordRow key={i} rowIndex={i} />
             ))}

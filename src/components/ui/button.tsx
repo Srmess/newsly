@@ -29,14 +29,14 @@ const buttonVariants = cva(
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
-        tab: "px-4 py-1 has-[>svg]:px-3",
+        tab: "px-4 py-1 has-[>svg]:px-3 h-full",
         keyWordle:
-          "h-12 min-w-[44px] px-3 py-2 rounded-md text-sm sm:text-xl font-extrabold ",
+          "h-14 min-w-[44px] px-3 py-2 rounded-md text-sm sm:text-xl font-extrabold ",
       },
       state: {
         neutral: "",
         wrong:
-          "bg-zinc-200/40 text-zinc-900 dark:bg-zinc-800/40 dark:text-zinc-50 border border-transparent",
+          "bg-zinc-200/40 text-zinc-900  hover:bg-zinc-200/40 dark:bg-zinc-800/40 dark:text-zinc-50 border border-transparent dark:hover:bg-zinc-800/40",
         "right-letter": "bg-system-yellow text-white dark:bg-system-yellow",
         "right-place": "bg-system-green text-white dark:bg-system-green",
       },

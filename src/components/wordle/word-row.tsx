@@ -24,7 +24,7 @@ export const WordRow = ({ rowIndex }: WordRowProps) => {
   };
 
   return (
-    <div className="flex justify-center gap-2 mb-4 mt-2 text-2xl font-extrabold">
+    <div className="flex justify-center gap-2 text-2xl font-extrabold">
       {Array.from({ length: 5 }).map((_, i) => {
         if (curRow === rowIndex) {
           return (

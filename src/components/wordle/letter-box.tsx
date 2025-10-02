@@ -25,7 +25,12 @@ export const LetterBox = React.forwardRef<
   const fieldName = `letter.${letterIndex}` as const;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = (e.target.value || "").slice(-1).toUpperCase();
+    let val = (e.target.value || "").slice(-1).toUpperCase();
+
+    if (/^[´`^~]$/.test(val)) {
+      val = "";
+    }
+
     setValue(fieldName, val);
     if (val.length > 0) {
       setInputFocus(letterIndex + 1);
@@ -36,7 +41,11 @@ export const LetterBox = React.forwardRef<
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const currentVal = (e.currentTarget.value || "").toString();
 
-    if (/^[1-9]$/.test(e.key)) return;
+    if (/^[^a-zA-Z]$/.test(e.key)) {
+      e.preventDefault();
+      e.currentTarget.value = currentVal;
+      return;
+    }
 
     if (e.key === "ArrowRight") {
       setInputFocus(letterIndex + 1);

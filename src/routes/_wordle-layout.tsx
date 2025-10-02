@@ -9,10 +9,10 @@ export const Route = createFileRoute("/_wordle-layout")({
 
 function LayoutComponent() {
   return (
-    <div className="min-h-screen h-full">
+    <div className="">
       <WordleHeader />
       <WordleContextProvider>
-        <div className="h-full pb-10 py-5">
+        <div className="pb-10 py-10">
           <Outlet />
         </div>
       </WordleContextProvider>
