@@ -44,8 +44,8 @@ function RouteComponent() {
   const news = Route.useLoaderData();
 
   return (
-    <div className="flex flex-col gap-3 px-20">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+    <div className="h-full flex flex-col gap-5 mx-2">
+      <div className="flex flex-col  md:grid md:grid-cols-2 gap-6 ">
         {news?.data?.articles?.map((article) => {
           return <NewsCard article={article} key={article.url} />;
         })}

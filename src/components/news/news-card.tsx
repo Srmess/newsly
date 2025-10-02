@@ -17,7 +17,7 @@ export const NewsCard = ({ article }: newsCardProps) => {
     <Link to={article.url}>
       <Card variant={"newsCard"}>
         <div className="relative">
-          <div className="h-full aspect-[3/2] rounded-2xl overflow-hidden">
+          <div className="h-full lg:aspect-[3/2] rounded-2xl overflow-hidden">
             <img
               src={article.urlToImage}
               alt={article.title}

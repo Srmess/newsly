@@ -21,7 +21,7 @@ export const cardVariants = cva(
     variants: {
       variant: {
         default: "flex-col gap-6",
-        newsCard: "max-h-72 flex-row gap-6 p-3 h-full",
+        newsCard: "flex-col xl:max-h-72 xl:flex-row gap-6 p-3 h-full",
       },
     },
     defaultVariants: {
