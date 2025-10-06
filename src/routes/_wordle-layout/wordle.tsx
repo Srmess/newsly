@@ -1,12 +1,14 @@
+import { Button } from "@/components/ui/button";
 import { Keyboard } from "@/components/wordle/keyboard";
 import { WordRow } from "@/components/wordle/word-row";
 import { useWordleContext } from "@/context/wordle-context";
-import { getGameData } from "@/lib/helper/wordle-helpers";
+import { getGameData, resetGame } from "@/lib/helper/wordle-helpers";
 import { words, wordsWithAccents } from "@/lib/words";
 import { WordleSchema, type WordleInfer } from "@/schemas/wordle-schema";
 import type { LocalStorageWordleData } from "@/types/wordle";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute } from "@tanstack/react-router";
+import { RotateCcw } from "lucide-react";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -100,6 +102,19 @@ function RouteComponent() {
           <Keyboard />
         </form>
       </FormProvider>
+
+      {gameData.tries.length === 6 && (
+        <div className="flex items-center justify-center w-full">
+          <Button
+            onClick={() => {
+              resetGame();
+              window.location.reload();
+            }}
+          >
+            <RotateCcw /> Reiniciar Jogo
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
